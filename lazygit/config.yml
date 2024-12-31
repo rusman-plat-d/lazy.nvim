@@ -1,0 +1,9 @@
+gui:
+  theme:
+    activeBorderColor: "yellow"
+    inactiveBorderColor: "black"
+  commitLengthWarning: 50
+
+git:
+  confirmOnExit: true
+  showCommandLog: true

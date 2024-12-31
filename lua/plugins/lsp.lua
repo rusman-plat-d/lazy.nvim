@@ -7,7 +7,7 @@ return {
                 settings = {
                     intelephense = {
                         files = {
-                            associations = { "*.php", "*.module", "*.inc" },     -- File extensions
+                            -- associations = { "*.php", "*.module", "*.inc" },     -- File extensions
                             maxSize = 1000000, -- Example setting for larger files
                         },
                         telemetry = {
