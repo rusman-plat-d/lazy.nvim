@@ -1,0 +1,42 @@
+return {
+  "numToStr/Comment.nvim",
+  opts = function()
+    local comment_utils = require("Comment.utils")
+    return {
+      pre_hook = function(ctx)
+        -- Get the current filetype
+        local filetype = vim.bo.filetype
+
+        -- Define custom comment styles for specific filetypes
+        if filetype == "javascript" or filetype == "typescript" then
+          return comment_utils.get_commentstring({
+            key = ctx.ctype == comment_utils.ctype.line and "__default" or "__multiline",
+          })
+        elseif filetype == "lua" then
+          -- Use '--' for Lua
+          return "-- %s"
+        elseif filetype == "html" or filetype == "xml" then
+          -- Use '<!-- -->' for HTML/XML
+          return "<!-- %s -->"
+        elseif filetype == "python" then
+          -- Use '#' for Python
+          return "# %s"
+        elseif filetype == "c" or filetype == "cpp" then
+          -- Use '//' for C/C++
+          return "// %s"
+        elseif filetype == "bash" or filetype == "sh" then
+          -- Use '#' for Bash/Shell scripts
+          return "# %s"
+        else
+          -- Fallback to default comment style
+          return comment_utils.get_commentstring({
+            key = ctx.ctype == comment_utils.ctype.line and "__default" or "__multiline",
+          })
+        end
+      end,
+    }
+  end,
+  keys = {
+    { "<leader>/", mode = { "n", "v" }, desc = "Toggle comment" },
+  },
+}
