@@ -6,7 +6,7 @@ install
 sudo snap install nvim --classic
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-npm install -g eslint eslint_d intelephense prettier prettier-plugin-blade pyright stylelint stylelint-config-standard typescript typescript-language-server 
+npm install -g blade-formatter eslint eslint_d intelephense prettier prettier-plugin-blade pyright stylelint stylelint-config-standard typescript typescript-language-server 
 npm install -g @tailwindcss/language-server @angular/language-server vls vscode-langservers-extracted
 sudo snap install go --classic
 go install golang.org/x/tools/gopls@latest

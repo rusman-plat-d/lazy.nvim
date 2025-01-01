@@ -27,19 +27,25 @@ return {
                 },
                 intelephense = {
                     -- You can add additional settings here if needed
+                    filetypes = { "php", "blade" },
                     settings = {
                         intelephense = {
                             -- Default settings
-                            init_options = {
-                                licenceKey = nil,
-                                clearCache = false,
-                            },
                             environment = {
                                 phpVersion = "8.2",
                             },
+                            format = {
+                                braces = "k&r",
+                            },
+                            filetypes = { "php", "blade" },
                             files = {
                                 -- associations = { "*.php", "*.module", "*.inc" },     -- File extensions
+                                associations = { "*.php", "*.blade.php" },
                                 maxSize = 1000000, -- Example setting for larger files
+                            },
+                            init_options = {
+                                licenceKey = nil,
+                                clearCache = false,
                             },
                             telemetry = {
                                 enable = true, -- Disable telemetry if needed

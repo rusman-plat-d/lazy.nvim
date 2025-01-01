@@ -47,14 +47,13 @@ return {
   { import = "lazyvim.plugins.extras.lang.tailwind" },
 
   -- Add other language extras or formatting tools as needed
-
-  -- Treesitter for CSS/SCSS
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
       opts.ensure_installed = vim.list_extend(opts.ensure_installed, {
         "bash",
+        "blade",
         "css",
         "html",
         "javascript",
@@ -65,6 +64,7 @@ return {
         "python",
         "query",
         "php",
+        "php_only",
         "regex",
         "scss",
         "sql",
@@ -72,6 +72,13 @@ return {
         "typescript",
         "vim",
         "yaml",
+      })
+    end,
+    config = function(_, opts)
+      vim.filetype.add({
+        pattern = {
+          ["*%.blade%.php"] = "blade",
+        },
       })
     end,
   },
@@ -86,6 +93,8 @@ return {
           filetypes = { "php", "blade" },
           extra_filetypes = { "blade.php" }, -- Explicitly include .blade.php
         }),
+        -- Add blade-formatter for Blade files
+        null_ls.builtins.formatting.blade_formatter,
         -- Golangci-lint for Go
         null_ls.builtins.diagnostics.golangci_lint.with({
           command = "golangci-lint", -- Ensure correct command is used
@@ -114,20 +123,23 @@ return {
         -- PHP Stan for diagnostics
         null_ls.builtins.diagnostics.phpstan,
       })
-      vim.filetype.add({
-        extension = {
-          blade = "blade",
-          ["blade.php"] = "blade",
-        },
-      })
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        -- pattern = { "*.php", "*.blade.php" },
-        callback = function()
-          vim.lsp.buf.format({
-            async = false, -- Synchronous formatting before saving
-          })
-        end,
-      })
+      -- vim.api.nvim_create_autocmd("BufWritePre", {
+      --   pattern = { "*.php", "*.blade.php" },
+      --   callback = function()
+      --     vim.lsp.buf.format({
+      --       async = false, -- Synchronous formatting before saving
+      --     })
+      --   end,
+      -- })
     end,
+  },
+  {
+    -- Add the blade-nav.nvim plugin which provides Goto File capabilities
+    -- for Blade files.
+    "ricardoramirezr/blade-nav.nvim",
+    dependencies = {
+      "hrsh7th/nvim-cmp",
+    },
+    ft = { "blade", "php" },
   },
 }
