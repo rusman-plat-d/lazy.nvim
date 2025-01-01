@@ -52,8 +52,27 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "css", "scss" })
-      opts = { ensure_installed = {  } }
+      opts.ensure_installed = opts.ensure_installed or {}
+      opts.ensure_installed = vim.list_extend(opts.ensure_installed, {
+        "bash",
+        "css",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "php",
+        "regex",
+        "scss",
+        "sql",
+        "tsx",
+        "typescript",
+        "vim",
+        "yaml",
+      })
     end,
   },
   -- LSP and formatting support
@@ -65,6 +84,7 @@ return {
       opts.sources = vim.list_extend(opts.sources, {
         null_ls.builtins.formatting.prettier.with({
           filetypes = { "php", "blade" },
+          extra_filetypes = { "blade.php" }, -- Explicitly include .blade.php
         }),
         -- Golangci-lint for Go
         null_ls.builtins.diagnostics.golangci_lint.with({
@@ -87,36 +107,27 @@ return {
         null_ls.builtins.code_actions.eslint_d,
 
         -- PHP CS Fixer for formatting
-        null_ls.builtins.formatting.phpcsfixer,
+        null_ls.builtins.formatting.phpcsfixer.with({
+          command = "php-cs-fixer",    -- ensure the command is in your PATH
+          args = { "fix", "--quiet" }, -- Customize rules as needed
+        }),
         -- PHP Stan for diagnostics
         null_ls.builtins.diagnostics.phpstan,
+      })
+      vim.filetype.add({
+        extension = {
+          blade = "blade",
+          ["blade.php"] = "blade",
+        },
       })
       vim.api.nvim_create_autocmd("BufWritePre", {
         -- pattern = { "*.php", "*.blade.php" },
         callback = function()
           vim.lsp.buf.format({
-            async = false,     -- Synchronous formatting before saving
+            async = false, -- Synchronous formatting before saving
           })
         end,
       })
     end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      format_on_save = true,
-      servers = {
-        cssls = {
-          settings = {
-            css = {
-              validate = true,
-            },
-            scss = {
-              validate = true,
-            },
-          },
-        },
-      },
-    },
   },
 }
