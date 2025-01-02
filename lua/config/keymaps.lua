@@ -6,3 +6,6 @@
 -- vim.keymap.set("n", "<leader>o", ":NeoTreeReveal<CR>", { desc = "Reveal current file in Neo-tree" })
 
 vim.keymap.set("n", "<leader>tn", "toggle_node", { desc = "Toggle Neo-tree", nowait = false })
+
+vim.keymap.set("n", "<leader>P", "o<Esc>p", { desc = "Paste below as new lines" })
+vim.keymap.set("n", "<leader>p", "O<Esc>p", { desc = "Paste above as new lines" })
