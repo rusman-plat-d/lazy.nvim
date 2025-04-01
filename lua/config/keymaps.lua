@@ -9,3 +9,7 @@ vim.keymap.set("n", "<leader>tn", "toggle_node", { desc = "Toggle Neo-tree", now
 
 vim.keymap.set("n", "<leader>P", "o<Esc>p", { desc = "Paste below as new lines" })
 vim.keymap.set("n", "<leader>p", "O<Esc>p", { desc = "Paste above as new lines" })
+
+vim.keymap.set('v', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
+vim.keymap.set('n', '<leader>Y', '"+yg_', { desc = "Copy line to system clipboard" })
+vim.keymap.set('n', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
